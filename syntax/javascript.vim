@@ -85,8 +85,8 @@ syntax keyword javaScriptPrototype      prototype
 
 "" Program Keywords
 syntax keyword javaScriptSource         import export
-syntax keyword javaScriptType           const undefined var void yield 
-syntax keyword javaScriptOperator       delete new in instanceof let typeof
+syntax keyword javaScriptType           const undefined void yield
+syntax keyword javaScriptKeyword        this var delete new in instanceof let typeof
 syntax keyword javaScriptBoolean        true false
 syntax keyword javaScriptNull           null
 syntax keyword javaScriptThis           this
@@ -184,9 +184,10 @@ endif
 
 "" Fold control
 if exists("b:javascript_fold")
-    syntax match   javaScriptFunction       /\<function\>/ nextgroup=javaScriptFuncName skipwhite
-    syntax match   javaScriptOpAssign       /=\@<!=/ nextgroup=javaScriptFuncBlock skipwhite skipempty
-    syntax region  javaScriptFuncName       contained matchgroup=javaScriptFuncName start=/\%(\$\|\w\)*\s*(/ end=/)/ contains=javaScriptLineComment,javaScriptComment,javaScriptCallback nextgroup=javaScriptFuncBlock skipwhite skipempty
+    syntax match   javaScriptFunction       /\<\(function\)\>/ nextgroup=javaScriptFuncName,javaScriptFuncArguments skipwhite
+    " syntax match   javaScriptOpAssign       /=\@<!=/ nextgroup=javaScriptFuncBlock skipwhite skipempty
+    syntax match   javaScriptFuncName       contained "\w\+" nextgroup=javaScriptFuncArguments skipwhite
+    syntax region  javaScriptFuncArguments  start=/(/ end=/)/ contains=@javaScriptAll,javaScriptLineComment,javaScriptComment nextgroup=javaScriptFuncBlock skipwhite skipempty
     syntax region  javaScriptFuncBlock      contained matchgroup=javaScriptFuncBlock start="{" end="}" contains=@javaScriptAll,javaScriptParensErrA,javaScriptParensErrB,javaScriptParen,javaScriptBracket,javaScriptBlock fold
 else
     syntax keyword javaScriptFunction       function
@@ -219,17 +220,18 @@ if version >= 508 || !exists("did_javascript_syn_inits")
   HiLink javaScriptRegexpCharClass      Character
   HiLink javaScriptCharacter            Character
   HiLink javaScriptPrototype            Type
+  HiLink javaScriptFunction             Special
   HiLink javaScriptConditional          Conditional
   HiLink javaScriptBranch               Conditional
   HiLink javaScriptRepeat               Repeat
   HiLink javaScriptStatement            Statement
-  HiLink javaScriptFunction             Function
+  HiLink javaScriptFuncName             Function
   HiLink javaScriptError                Error
   HiLink javaScriptParensError          Error
   HiLink javaScriptParensErrA           Error
   HiLink javaScriptParensErrB           Error
   HiLink javaScriptParensErrC           Error
-  HiLink javaScriptOperator             Operator
+  HiLink javaScriptKeyword              Keyword
   HiLink javaScriptType                 Type
   HiLink javaScriptThis                 Type
   HiLink javaScriptArguments            Type
@@ -242,6 +244,9 @@ if version >= 508 || !exists("did_javascript_syn_inits")
   HiLink javaScriptSource               Special
   HiLink javaScriptGlobalObjects        Special
   HiLink javaScriptExceptions           Special
+
+  " HiLink javaScriptBracket              NonText
+  " HiLink javaScriptParen                NonText
 
   HiLink javaScriptDomErrNo             Constant
   HiLink javaScriptDomNodeConsts        Constant
