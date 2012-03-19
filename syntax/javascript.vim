@@ -183,15 +183,15 @@ if main_syntax == "javascript"
 endif
 
 "" Fold control
-if exists("b:javascript_fold")
-    syntax match   javaScriptFunction       /\<\(function\)\>/ nextgroup=javaScriptFuncName,javaScriptFuncArguments skipwhite
-    " syntax match   javaScriptOpAssign       /=\@<!=/ nextgroup=javaScriptFuncBlock skipwhite skipempty
-    " syntax match   javaScriptFuncName       contained "\w\+" nextgroup=javaScriptFuncArguments skipwhite
-    " syntax region  javaScriptFuncArguments  start=/(/ end=/)/ contains=@javaScriptAll,javaScriptLineComment,javaScriptComment nextgroup=javaScriptFuncBlock skipwhite skipempty
-    " syntax region  javaScriptFuncBlock      contained matchgroup=javaScriptFuncBlock start="{" end="}" contains=@javaScriptAll,javaScriptParensErrA,javaScriptParensErrB,javaScriptParen,javaScriptBracket,javaScriptBlock fold
-else
-    syntax keyword javaScriptFunction       function
-endif
+" if exists("b:javascript_fold")
+"     syntax match   javaScriptFunction       /\<\(function\)\>/ nextgroup=javaScriptFuncName,javaScriptFuncArguments skipwhite
+"     " syntax match   javaScriptOpAssign       /=\@<!=/ nextgroup=javaScriptFuncBlock skipwhite skipempty
+"     syntax match   javaScriptFuncName       contained "\w\+" nextgroup=javaScriptFuncArguments skipwhite
+"     syntax region  javaScriptFuncArguments  start=/(/ end=/)/ contains=@javaScriptAll,javaScriptLineComment,javaScriptComment nextgroup=javaScriptFuncBlock skipwhite skipempty
+"     syntax region  javaScriptFuncBlock      contained matchgroup=javaScriptFuncBlock start="{" end="}" contains=@javaScriptAll,javaScriptParensErrA,javaScriptParensErrB,javaScriptParen,javaScriptBracket,javaScriptBlock fold
+" else
+"     syntax keyword javaScriptFunction       function
+" endif
 
 " Define the default highlighting.
 " For version 5.7 and earlier: only when not done already
